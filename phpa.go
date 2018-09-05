@@ -1,8 +1,22 @@
 package main
 
+import (
+	"bufio"
+	"errors"
+	"fmt"
+	_ "io"
+	"io/ioutil"
+	"os"
+	exe "os/exec"
+	"path/filepath"
+	"regexp"
+	"runtime"
+	"runtime/debug"
+	"strings"
+	"syscall"
+)
+
 /*
-
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,16 +24,16 @@ package main
 #include <string.h>
 
 
-char* get_command_line (unsigned char* cp) {
+char* get_command_line ( char* cp) {
     // コマンドラインから取得した1バイト分の文字
-    unsigned char c ;
+     char c ;
     // メモリ拡張時の一時的アドレス
-    unsigned char* t_cp;
+     char* t_cp;
     int slen = 0;
     int index = 0;
     while(c = getchar()) {
         slen++;
-        t_cp = (unsigned char*)realloc(cp, sizeof(unsigned char) * slen);
+        t_cp = ( char*)realloc(cp, sizeof( char) * slen);
         // メモリ確保失敗時
         if (t_cp == NULL) {
             free(cp);
@@ -44,24 +58,9 @@ char* get_command_line (unsigned char* cp) {
         index++;
     }
 }
-extern char*  get_command_line(unsigned char*);
+extern char*  get_command_line( char*);
 */
-import (
-	"C"
-	"bufio"
-	"errors"
-	"fmt"
-	_ "io"
-	"io/ioutil"
-	"os"
-	exe "os/exec"
-	"path/filepath"
-	"regexp"
-	"runtime"
-	"runtime/debug"
-	"strings"
-	"syscall"
-)
+import "C"
 
 /*
 // 関数ポインタの型宣言
@@ -104,6 +103,8 @@ var format func(...interface{}) (int, error) = fmt.Println
 var myPrint func(...interface{}) (int, error) = fmt.Print
 
 func main() {
+	cs := C.CString("")
+	print(C.get_command_line(cs))
 	const initializer = "<?php " + "\n"
 	// 利用変数初期化
 	var input string
