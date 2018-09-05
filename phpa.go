@@ -104,7 +104,8 @@ var myPrint func(...interface{}) (int, error) = fmt.Print
 
 func main() {
 	cs := C.CString("")
-	print(C.get_command_line(cs))
+	print(C.GoString(C.get_command_line(cs)))
+
 	const initializer = "<?php " + "\n"
 	// 利用変数初期化
 	var input string
