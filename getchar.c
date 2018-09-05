@@ -11,8 +11,15 @@ char *get_command_line_02(void);
 
 int main()
 {
-    char* str;
+    FILE *fp = NULL;
+    fp = fopen("./message_you_inputed.dat", "ab");
+    if (fp == NULL) {
+        printf("任意のファイルオープンに失敗しました。");
+        exit(255);
+    }
+    char *str;
     while (1) {
+
         str = get_command_line_02();
         printf("あなたが入力した文字列は => (%s)", str);
         free(str);
@@ -81,3 +88,4 @@ char* get_command_line (unsigned char* cp) {
         index++;
     }
 }
+
