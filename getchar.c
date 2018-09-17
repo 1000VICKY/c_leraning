@@ -5,26 +5,50 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <string>
+#include <iostream>
 
-char* get_command_line (unsigned char*);
+typedef struct MyString {
+    char *str;
+} MyString;
+
+using namespace std;
+unsigned char *get_command_line(unsigned char *);
 char *get_command_line_02(void);
 
 int main()
 {
-    FILE *fp = NULL;
-    fp = fopen("./message_you_inputed.dat", "ab");
-    if (fp == NULL) {
-        printf("任意のファイルオープンに失敗しました。");
-        exit(255);
-    }
-    char *str;
-    while (1) {
+    MyString *myString_ptr = (MyString *)malloc(sizeof(MyString) * 1);
+    std::string c_string = "C言語の文字列である。";
 
+    cout << c_string << endl;
+    printf("%s", c_string.c_str());
+    FILE *fp = NULL;
+    char *str;
+
+    while (1) {
+        std::string inner_string = "";
+        fp = fopen("./message_you_inputed.dat", "a");
+        if (fp == NULL) {
+            printf("任意のファイルオープンに失敗しました。");
+            exit(255);
+        }
         str = get_command_line_02();
+        myString_ptr->str = str;
+        inner_string = std::string(str);
+        printf("あなたが入力した文字列を、自身で定義した構造体で出力[%s]", myString_ptr->str);
         printf("あなたが入力した文字列は => (%s)", str);
+        printf("%d", strlen(str));
+        printf("%d", fwrite(str, strlen(str), 1, fp));
+
+
         free(str);
+        printf("あなたが入力した文字列を、自身で定義した構造体で出力[%s]", myString_ptr->str);
+        printf("%s", str);
         printf("\n");
+        fclose(fp);
     }
+    return (0);
 }
 
 char* get_command_line_02() {
@@ -54,7 +78,7 @@ char* get_command_line_02() {
         }
     }
 }
-char* get_command_line (unsigned char* cp) {
+unsigned char* get_command_line (unsigned char* cp) {
     // コマンドラインから取得した1バイト分の文字
     unsigned char c ;
     // メモリ拡張時の一時的アドレス
