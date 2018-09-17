@@ -5,7 +5,10 @@
 #define S 128
 
 
-char* get_string_from_cli () {
+
+
+char* get_command_line () {
+    printf("<commandline>");
     // 戻り値用文字列
     char *input = NULL;
     // 関数内でのメモリ確保用一時文字列
@@ -24,7 +27,9 @@ char* get_string_from_cli () {
     while(c = getchar()) {
         // indexがメモリの範囲を超えるようであればreallco();
         if (index == size) {
+            printf("<メモリ拡張>");
             size = size + S;
+            printf("定数S<%d>", size);
             // 規定バイトである128byteずつ大きくしていく
             temp = (char *)realloc(input, size * sizeof(char));
             if (temp == NULL) {
@@ -34,6 +39,7 @@ char* get_string_from_cli () {
             if (temp != input ) {
                 //ポインタ変数を入れ直す
                 input = temp;
+                temp = NULL;
             }
         }
         // 改行文字が来たら文字入力終了
@@ -45,5 +51,15 @@ char* get_string_from_cli () {
         // 書き込み対象を1byteずつシフト
         index++;
     }
-    return input;
+    // 余分なメモリをカットする
+    temp = (char *)realloc(input, (strlen(input) + 1) * sizeof(char));
+    if (temp == NULL) {
+        printf("メモリのダイエットに失敗");
+        return input;
+    }
+    if (temp != input) {
+        input = temp;
+    }
+    printf("</commandline>");
+    return (input);
 }
