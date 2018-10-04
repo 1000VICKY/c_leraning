@@ -22,7 +22,7 @@ char* add_any_words (char* target, const char* option_words) {
     // 必要な総byte数は(第一引数のNULL文字を除く長さ + 第二引数のNULL文字を除く長さ + 連結後の文字列に付与するNULL文字分)
     int total_length = first_length + second_length + 1;
 
-    // 連結後の
+    // 連結後の一時ポインタ
     char *temp = NULL;
     printf("<文字の拡張>");
     temp = (char *)realloc(target, total_length * sizeof(char));

@@ -8,7 +8,6 @@
 
 
 char* get_command_line () {
-    printf("<commandline>");
     // 戻り値用文字列
     char *input = NULL;
     // 関数内でのメモリ確保用一時文字列
@@ -60,6 +59,5 @@ char* get_command_line () {
     if (temp != input) {
         input = temp;
     }
-    printf("</commandline>");
     return (input);
 }

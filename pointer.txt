@@ -1,0 +1,29 @@
+
+
+#include <stdio.h>
+#include < string.h >
+#include <stdlib.h>
+
+
+
+
+typedef struct  _Company {
+    char *company_name;
+    char *company_address;
+    char *president_name;
+    int munber_of_staffs;
+
+}
+int main(){
+
+    Compnay *cp = NULL;
+    cp = (Company *)malloc(1 * sizeof(Company));
+    if (cp == NULL) {
+        exit(255);
+    }
+    cp->company_name = "有限会社千疋電気商会";
+    cp->company_address = "大分県国東市国東町田深";
+    cp->president_name = "千疋厚司";
+    Company **cpp = &cp;
+    printf("%s", *cpp->company_name);
+}
